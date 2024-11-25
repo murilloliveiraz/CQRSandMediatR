@@ -7,7 +7,7 @@ namespace Domain.Abstractions
         Task<IEnumerable<Member>> GetAll();
         Task<Member> GetMemberById(int memberId);
         Task<Member> AddMember(Member member);
-        Task<Member> UpdateMember(Member member);
+        void UpdateMember(Member member);
         Task<Member> DeleteMember(int memberId);
     }
 }

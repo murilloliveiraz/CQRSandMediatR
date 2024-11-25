@@ -1,4 +1,5 @@
 ﻿using Domain.Validation;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
@@ -18,6 +19,7 @@ namespace Domain.Entities
 
         public Member() { }
 
+        [JsonConstructor]
         public Member(int id, string firstname, string lastname, string gender,
         string email, bool? active)
         {
