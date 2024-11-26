@@ -6,6 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using System.Data;
+using MediatR;
+using FluentValidation;
+using System.Reflection;
+using Application.Members.Commands.Validations;
 
 namespace CrossCutting.AppDependencies
 {
@@ -28,8 +32,13 @@ namespace CrossCutting.AppDependencies
             services.AddScoped<IMemberDapperRepository, MemberDapperRepository>();
 
             var myHandlers = AppDomain.CurrentDomain.Load("Application");
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(myHandlers));
-            
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssemblies(myHandlers);
+                cfg.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+            });
+            services.AddValidatorsFromAssembly(Assembly.Load("Application"));
+
             return services;
         }
     }
